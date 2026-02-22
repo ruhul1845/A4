@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist&display=swap" rel="stylesheet">
+    <style>
+        * {
+            background-color: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="w-[1600px] h-[900px] px-[245px] py-[60px] flex flex-col gap-[30px] mx-auto">
+        <h2 class="text-3xl font-bold text-[#1a1a6e]">
+            Job Application Tracker
+        </h2>
+        <div class="w-[1110px] grid grid-cols-3 gap-4 mx-auto">
+            <div
+                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
+                <span class="text-sm text-gray-500">Total</span>
+                <span id="total" class="text-2xl font-bold text-[#1a1a6e]">8</span>
+            </div>
+            <div
+                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
+                <span class="text-sm text-gray-500">Interview</span>
+                <span id="interview" class="text-2xl font-bold text-emerald-500">0</span>
+            </div>
+            <div
+                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
+                <span class="text-sm text-gray-500">Rejected</span>
+                <span id="rejected" class="text-2xl font-bold text-red-500">0</span>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
