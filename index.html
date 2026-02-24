@@ -61,7 +61,6 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold text-slate-800">Available Jobs</h2>
             <p class="text-sm text-slate-500"> <span id="jobCount">8</span> Jobs </p>
-
         </div>
 
         <!-- Tabs -->
@@ -70,17 +69,16 @@
                 class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-indigo-600 bg-indigo-600 text-white transition-all"
                 data-target="grid-all">All</button>
             <button
-                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600  transition-all"
+                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 transition-all"
                 data-target="grid-interview">Interview</button>
             <button
-                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600  transition-all"
+                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 transition-all"
                 data-target="grid-rejected">Rejected</button>
         </div>
 
         <!-- Empty State -->
         <div id="emptyState"
-            class="hidden flex-col items-center justify-center h-64 border border-slate-200 rounded-xl bg-white tetx-centre">
-            <span class="text-5xl mb-4 opacity 50"><img src="./asset/jobs.png"></span>
+            class="hidden flex-col items-center justify-center h-64 border border-slate-200 rounded-xl bg-white text-center">
             <h3 class="text-lg font-semibold text-slate-600">No jobs here</h3>
             <p class="text-sm text-slate-400 mt-1">Check back soon for new opportunities</p>
         </div>
@@ -89,7 +87,7 @@
         <div id="grid-all" class="grid gap-5">
 
             <!-- Card 1 -->
-            <div
+            <div data-id="1"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -114,7 +112,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div
+            <div data-id="2"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -139,7 +137,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div
+            <div data-id="3"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -162,8 +160,9 @@
                         class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
                 </div>
             </div>
+
             <!-- Card 4 -->
-            <div
+            <div data-id="4"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -188,7 +187,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div
+            <div data-id="5"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -214,7 +213,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div
+            <div data-id="6"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -239,7 +238,7 @@
             </div>
 
             <!-- Card 7 -->
-            <div
+            <div data-id="7"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -264,7 +263,7 @@
             </div>
 
             <!-- Card 8 -->
-            <div
+            <div data-id="8"
                 class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -292,18 +291,14 @@
         </div>
 
         <!-- INTERVIEW grid -->
-        <div id="grid-interview" class="hidden grid gap-5">
-
-        </div>
+        <div id="grid-interview" class="hidden grid gap-5"></div>
 
         <!-- REJECTED grid -->
-        <div id="grid-rejected" class="hidden grid gap-5">
-
-        </div>
+        <div id="grid-rejected" class="hidden grid gap-5"></div>
 
     </section>
-
     <script src="./js/dom .js"></script>
+
 </body>
 
 </html>
