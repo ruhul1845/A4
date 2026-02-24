@@ -1,110 +1,59 @@
-// ─────────────────────────────────────────────
-//  JOB APPLICATION TRACKER — dom.js
-// ─────────────────────────────────────────────
+const interviewButton = document.querySelectorAll(".interview-btn");
+const RejectedButton = document.querySelectorAll(".reject-btn")
+const total = document.getElementById("total");
+const inTotal = document.getElementById("interviewCount");
+const rejTotal = document.getElementById("rejectedCount");
+const Jobcount = document.getElementById("jobCount");
 
-const tabBtns       = document.querySelectorAll(".tab-btn");
-const emptyState    = document.getElementById("emptyState");
-const jobCountEl    = document.getElementById("jobCount");
-const totalEl       = document.getElementById("total");
-const interviewEl   = document.getElementById("interviewCount");
-const rejectedEl    = document.getElementById("rejectedCount");
+const interviewGrid = document.getElementById("grid-interview");
+const rejectGrid = document.getElementById("grid-rejected");
 
-const gridAll       = document.getElementById("grid-all");
-const gridInterview = document.getElementById("grid-interview");
-const gridRejected  = document.getElementById("grid-rejected");
 
-const allGrids      = { "grid-all": gridAll, "grid-interview": gridInterview, "grid-rejected": gridRejected };
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".interview-btn")) {
+        let intv = Number(inTotal.innerText);
+        let all = Number(total.innerText);
+        const card = e.target.closest(".job-card");
 
-// ── UPDATE STATS ───────────────────────────────
-function updateStats() {
-    const total      = document.querySelectorAll(".job-card").length;
-    const interviews = gridInterview.querySelectorAll(".job-card").length;
-    const rejected   = gridRejected.querySelectorAll(".job-card").length;
-    const available  = gridAll.querySelectorAll(".job-card").length;
+        // 2. Select the status badge inside THIS card
+        const badge = card.querySelector(".status-badge");
 
-    totalEl.textContent     = total;
-    interviewEl.textContent = interviews;
-    rejectedEl.textContent  = rejected;
-    jobCountEl.textContent  = `${available} job${available !== 1 ? "s" : ""}`;
-}
+        if (badge) {
+            // 3. Update the text
+            badge.innerText = "INTERVIEWED";
 
-// ── EMPTY STATE ────────────────────────────────
-function checkEmpty(grid) {
-    const isEmpty = grid.querySelectorAll(".job-card").length === 0;
-    emptyState.classList.toggle("hidden", !isEmpty);
-    emptyState.classList.toggle("flex", isEmpty);
-}
+            // 4. Overwrite all old classes with the new styling classes
+            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 font-semibold text-xs";
+        }
+        if (all > 0) {
+            total.innerText = all - 1;
+            Jobcount.innerText = total.innerText
+            inTotal.innerText = intv + 1;
+        }
+        console.log("Clicked button:", inTotal.innerText);
+    }
+    else if (e.target.closest(".reject-btn")) {
+        // 1. Convert strings to numbers safely
+        let rejv = Number(rejTotal.innerText);
+        let all = Number(total.innerText);
+        const card = e.target.closest(".job-card");
 
-// ── TAB SWITCH ─────────────────────────────────
-function switchTab(targetId) {
-    // Active / inactive tab button styles
-    tabBtns.forEach(btn => {
-        const isActive = btn.dataset.target === targetId;
-        btn.classList.toggle("bg-indigo-600",  isActive);
-        btn.classList.toggle("text-white",     isActive);
-        btn.classList.toggle("border-indigo-600", isActive);
-        btn.classList.toggle("bg-white",       !isActive);
-        btn.classList.toggle("text-slate-600", !isActive);
-        btn.classList.toggle("border-slate-200", !isActive);
-    });
+        // 2. Select the status badge inside THIS card
+        const badge = card.querySelector(".status-badge");
 
-    // Show/hide grids
-    Object.entries(allGrids).forEach(([id, grid]) => {
-        grid.classList.toggle("hidden", id !== targetId);
-    });
+        if (badge) {
+            // 3. Update the text
+            badge.innerText = "REJECTED";
+            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-red-400 text-red-500 font-semibold text-xs";
 
-    checkEmpty(allGrids[targetId]);
-}
+        }
 
-tabBtns.forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.target)));
+        if (all > 0) {
+            rejTotal.innerText = rejv + 1;
+            total.innerText = all - 1;
+            Jobcount.innerText = total.innerText;
+        }
 
-// ── WIRE CARD ──────────────────────────────────
-function wireCard(card) {
-    const badge        = card.querySelector(".status-badge");
-    const interviewBtn = card.querySelector(".interview-btn");
-    const rejectBtn    = card.querySelector(".reject-btn");
-    const deleteBtn    = card.querySelector(".delete-btn");
-
-    // INTERVIEW
-    interviewBtn.addEventListener("click", () => {
-        // Update badge — replace Tailwind color classes
-        badge.className = "status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-600";
-        badge.textContent = "INTERVIEWED";
-
-        interviewBtn.disabled = true;
-        rejectBtn.disabled    = true;
-
-        gridInterview.appendChild(card);
-        updateStats();
-        switchTab("grid-interview");
-    });
-
-    // REJECTED
-    rejectBtn.addEventListener("click", () => {
-        badge.className = "status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-red-50 text-red-500";
-        badge.textContent = "REJECTED";
-
-        interviewBtn.disabled = true;
-        rejectBtn.disabled    = true;
-
-        gridRejected.appendChild(card);
-        updateStats();
-        switchTab("grid-rejected");
-    });
-
-    // DELETE
-    deleteBtn.addEventListener("click", () => {
-        const parentGrid = card.parentElement;
-        card.classList.add("opacity-0", "scale-95", "transition-all", "duration-200");
-        setTimeout(() => {
-            card.remove();
-            updateStats();
-            checkEmpty(parentGrid);
-        }, 200);
-    });
-}
-
-// ── INIT ───────────────────────────────────────
-document.querySelectorAll(".job-card").forEach(wireCard);
-updateStats();
-checkEmpty(gridAll);
+        console.log("Updated Reject Count:", rejTotal.innerText);
+    }
+});
