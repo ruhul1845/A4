@@ -1,45 +1,304 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Tracker</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Geist&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
-        * {
-            background-color: #F8FAFC;
-        }
-
         body {
             font-family: 'Geist', sans-serif;
+        }
+
+        .mono {
+            font-family: 'Geist Mono', monospace;
         }
     </style>
 </head>
 
-<body>
-    <section class="w-[1600px] h-[900px] px-[245px] py-[60px] flex flex-col gap-[30px] mx-auto">
-        <h2 class="text-3xl font-bold text-[#1a1a6e]">
-            Job Application Tracker
-        </h2>
-        <div class="w-[1110px] grid grid-cols-3 gap-4 mx-auto">
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- ── HEADER ── -->
+    <section class="max-w-[1600px] mx-auto px-16 pt-14 pb-8 flex flex-col gap-8">
+
+        <h2 class="text-3xl font-bold text-[#1a1a6e]">Job Application Tracker</h2>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 max-w-4xl w-full mx-auto">
+
             <div
-                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
-                <span class="text-sm text-gray-500">Total</span>
-                <span id="total" class="text-2xl font-bold text-[#1a1a6e]">8</span>
+                class="flex flex-col justify-center gap-1 p-5 min-h-[97px] bg-white border border-slate-200 rounded-lg shadow-sm">
+                <span class="text-sm text-slate-500">Total</span>
+                <span id="total" class="mono text-2xl font-bold text-[#1a1a6e]">8</span>
             </div>
+
             <div
-                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
-                <span class="text-sm text-gray-500">Interview</span>
-                <span id="interview" class="text-2xl font-bold text-emerald-500">0</span>
+                class="flex flex-col justify-center gap-1 p-5 min-h-[97px] bg-white border border-slate-200 rounded-lg shadow-sm">
+                <span class="text-sm text-slate-500">Interview</span>
+                <span id="interviewCount" class="mono text-2xl font-bold text-emerald-500">0</span>
             </div>
+
             <div
-                class="min-h-[97px] flex flex-col justify-center gap-1 p-5 bg-gray-50 border border-gray-200 rounded-lg">
-                <span class="text-sm text-gray-500">Rejected</span>
-                <span id="rejected" class="text-2xl font-bold text-red-500">0</span>
+                class="flex flex-col justify-center gap-1 p-5 min-h-[97px] bg-white border border-slate-200 rounded-lg shadow-sm">
+                <span class="text-sm text-slate-500">Rejected</span>
+                <span id="rejectedCount" class="mono text-2xl font-bold text-red-500">0</span>
             </div>
+
         </div>
+
+        <hr class="border-slate-200">
     </section>
+
+    <!-- ── JOBS SECTION ── -->
+    <section class="max-w-[1600px] mx-auto px-16 pb-16">
+        <script src="dom.js"></script>
+        <!-- Header row -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold text-slate-800">Available Jobs</h2>
+            <p class="text-sm text-slate-500"> <span id="jobCount">8</span> Jobs </p>
+
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-6">
+            <button
+                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-indigo-600 bg-indigo-600 text-white transition-all"
+                data-target="grid-all">All</button>
+            <button
+                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all"
+                data-target="grid-interview">Interview</button>
+            <button
+                class="tab-btn mono text-sm font-semibold px-4 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all"
+                data-target="grid-rejected">Rejected</button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState"
+            class="hidden flex-col items-center justify-center h-64 border border-slate-200 rounded-xl bg-white">
+            <span class="text-5xl mb-4 opacity-30">📋</span>
+            <h3 class="text-lg font-semibold text-slate-600">No jobs here</h3>
+            <p class="text-sm text-slate-400 mt-1">Check back soon for new opportunities</p>
+        </div>
+
+        <!-- ALL grid -->
+        <div id="grid-all" class="grid gap-5">
+
+            <!-- Card 1 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Mobile First Corp</h3>
+                        <p class="text-slate-500 mt-0.5">React Native Developer</p>
+                        <p class="text-sm text-slate-400 mt-1">Remote · Full-time · $130,000 – $175,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Build cross-platform mobile applications using
+                    React Native. Work on products used by millions of users worldwide.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">WebFlow Agency</h3>
+                        <p class="text-slate-500 mt-0.5">Web Designer & Developer</p>
+                        <p class="text-sm text-slate-400 mt-1">Los Angeles, CA · Part-time · $80,000 – $120,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Create stunning web experiences for high-profile
+                    clients. Must have portfolio and experience with modern web design trends.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">DataViz Solutions</h3>
+                        <p class="text-slate-500 mt-0.5">Data Visualization Specialist</p>
+                        <p class="text-sm text-slate-400 mt-1">Boston, MA · Full-time · $125,000 – $165,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Design and build interactive data dashboards for
+                    enterprise clients. Strong D3.js and analytics background required.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Stripe</h3>
+                        <p class="text-slate-500 mt-0.5">Senior Frontend Engineer</p>
+                        <p class="text-sm text-slate-400 mt-1">San Francisco, CA · Full-time · $160,000 – $220,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Build and maintain Stripe's public-facing
+                    developer docs and dashboard UI. Deep React and TypeScript expertise required.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Notion</h3>
+                        <p class="text-slate-500 mt-0.5">Product Designer</p>
+                        <p class="text-sm text-slate-400 mt-1">Remote · Full-time · $130,000 – $170,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Shape the future of Notion's core editor
+                    experience. Work closely with engineering and research to define intuitive, delightful user
+                    workflows.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Cloudflare</h3>
+                        <p class="text-slate-500 mt-0.5">Backend Engineer – Edge Runtime</p>
+                        <p class="text-sm text-slate-400 mt-1">Austin, TX · Full-time · $145,000 – $195,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Develop and optimize Cloudflare's Workers
+                    runtime. Expertise in Rust or C++ and distributed systems at global scale is essential.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Figma</h3>
+                        <p class="text-slate-500 mt-0.5">Staff Software Engineer – Multiplayer</p>
+                        <p class="text-sm text-slate-400 mt-1">New York, NY · Full-time · $175,000 – $240,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Own the real-time collaboration infrastructure
+                    powering Figma's multiplayer experience. Strong background in CRDTs and WebSockets preferred.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div
+                class="job-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Linear</h3>
+                        <p class="text-slate-500 mt-0.5">Full-Stack Engineer</p>
+                        <p class="text-sm text-slate-400 mt-1">Remote · Full-time · $140,000 – $180,000</p>
+                    </div>
+                    <button
+                        class="delete-btn text-slate-300 hover:text-red-500 text-xl transition-colors p-1 rounded">🗑</button>
+                </div>
+                <span
+                    class="status-badge mono mt-4 inline-block px-3 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-600">NOT
+                    APPLIED</span>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Help build the fastest issue tracker on the
+                    planet. You'll work across the stack — from GraphQL APIs to pixel-perfect UI — with a small,
+                    high-output team.</p>
+                <div class="flex gap-3 mt-6">
+                    <button
+                        class="interview-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">INTERVIEW</button>
+                    <button
+                        class="reject-btn mono text-xs font-semibold px-4 py-2 rounded-md border-2 border-red-400 text-red-500 hover:bg-red-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">REJECTED</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- INTERVIEW grid -->
+        <div id="grid-interview" class="hidden grid gap-5"></div>
+
+        <!-- REJECTED grid -->
+        <div id="grid-rejected" class="hidden grid gap-5"></div>
+
+    </section>
+
+
 </body>
 
 </html>
