@@ -21,11 +21,11 @@ Ans : When an element is clicked then it get targeted or its scope
       get targeted then its moves upward to its parent or grandparents .
 
 
-<div id="grandparent">               3rd hit
-  <div id="parent">                  2nd hit
-    <button>Click Me</button>        1st hit (target)
-  </div>
-</div>
+### <div id="grandparent">               3rd hit
+###  <div id="parent">                  2nd hit
+###    <button>Click Me</button>        1st hit (target)
+###   </div>
+###  </div> 
 
 4. What is Event Delegation in JavaScript? Why is it useful?
 
