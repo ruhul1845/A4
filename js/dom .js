@@ -65,7 +65,7 @@ document.addEventListener("click", (e) => {
 
         if (badge) {
             badge.innerText = "INTERVIEWED";
-            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-emerald-500 text-emerald-600 font-semibold text-xs";
+            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-emerald-500 text-black-600 font-semibold text-xs bg-emerald-400";
         }
 
         // Hide action buttons after status is set
@@ -94,7 +94,7 @@ document.addEventListener("click", (e) => {
 
         if (badge) {
             badge.innerText = "REJECTED";
-            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-red-400 text-red-500 font-semibold text-xs";
+            badge.className = "status-badge mono mt-4 inline-block px-4 py-2 rounded-md border-2 border-red-400 text-black-600 font-semibold text-xs bg-red-500";
         }
 
         card.querySelector(".interview-btn").disabled = true;
@@ -120,14 +120,38 @@ document.addEventListener("click", (e) => {
         const card = e.target.closest(".job-card");
 
         // Only reduce total count if card is still in "all" grid (not yet actioned)
-        const isInAll = Allgrid.contains(card);
-        if (isInAll) {
-            let all = Number(total.innerText);
-            if (all > 0) {
-                total.innerText = all - 1;
-                Jobcount.innerText = total.innerText;
+        if (activeGrid === Allgrid) {
+            const isIn = Allgrid.contains(card);
+            if (isIn) {
+                let all = Number(total.innerText);
+                if (all > 0) {
+                    total.innerText = all - 1;
+                    Jobcount.innerText = total.innerText;
+                }
             }
         }
+        else if (activeGrid === interviewGrid) {
+            const isIn = interviewGrid.contains(card);
+            if (isIn) {
+                let intv = Number(inTotal.innerText);
+                if (intv > 0) {
+                    inTotal.innerText = intv - 1;
+
+                }
+            }
+        }
+        else if (activeGrid === rejectGrid) {
+            const isIn = rejectGrid.contains(card);
+            if (isIn) {
+                let rejv = Number(rejTotal.innerText);
+                if (rejv > 0) {
+                    rejTotal.innerText = rejv - 1;
+
+                }
+            }
+        }
+
+
 
         card.remove();
         checkEmpty(activeGrid);
