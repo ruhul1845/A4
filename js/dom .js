@@ -9,6 +9,7 @@ const interviewGrid = document.getElementById("grid-interview");
 const rejectGrid = document.getElementById("grid-rejected");
 const Allgrid = document.getElementById("grid-all");
 const emptyState = document.getElementById("emptyState");
+const Jobs = document.getElementById("Jobs");
 
 const tabBtns = document.querySelectorAll(".tab-btn");
 
@@ -62,12 +63,24 @@ function setActiveTab(clickedBtn) {
     });
     clickedBtn.classList.remove("bg-white", "text-slate-600", "border-slate-200");
     clickedBtn.classList.add("bg-indigo-600", "text-white", "border-indigo-600");
+
 }
 
 tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         showGrid(btn.dataset.target);
         setActiveTab(btn);
+        if (btn.dataset.target === "grid-interview") {
+            Jobs.innerText = `${inTotal.innerText} of ${Jobcount.innerText} Jobs`;
+
+        }
+        else if (btn.dataset.target === "grid-rejected") {
+            Jobs.innerText = `${rejTotal.innerText} of ${Jobcount.innerText} Jobs`;
+
+        }
+        else {
+            Jobs.innerText = `${Jobcount.innerText} Jobs`;
+        }
     });
 });
 
@@ -117,6 +130,8 @@ document.addEventListener("click", (e) => {
         interviewedCards.push({ id: cardId, clone: clonedCard });
         incrementCount(inTotal);
 
+
+
         setCardState(cardId, "interviewed", clonedCard);
     }
 
@@ -151,6 +166,7 @@ document.addEventListener("click", (e) => {
         rejectGrid.appendChild(clonedCard);
         rejectedCards.push({ id: cardId, clone: clonedCard });
         incrementCount(rejTotal);
+
 
         setCardState(cardId, "rejected", clonedCard);
     }
